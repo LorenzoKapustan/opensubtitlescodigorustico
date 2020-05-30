@@ -1,0 +1,53 @@
+import requests
+import os
+from urllib.request import urlretrieve
+from tkinter import * 
+from tkinter import ttk  
+from tkinter.filedialog import asksaveasfile
+i=0
+legenda=[]
+nome=input('Digite o nome do filme')
+cordona=''
+if(' 'in nome):
+    nome.split(' ')
+    for x in nome:
+        if(x==' '):
+            cordona+='+'
+        else:
+            cordona+=x
+    nome=cordona
+print(cordona)
+link2='https://www.opensubtitles.org/pt/search2/sublanguageid-pob/moviename-'+nome
+sc2=requests.get(link2).text
+sc2=sc2.split(' ')
+for x in sc2:
+    if(len(x)):
+        if('pob/idmovie'in x):
+            ovo=x[23:len(x)-7]
+            link='https://www.opensubtitles.org'+ovo
+            break
+sc=requests.get(link).text
+sc=sc.split(' ')
+for x in sc:
+    if(len(x)):
+        if('/pt/subtitleserve' in x and 'href' in x):
+            link=x[10:len(x)-1]
+            link='https://www.opensubtitles.org/pt/'+link
+            legenda.append(link)
+            i+=1
+            if(i==4):
+                break
+print (legenda[0])
+root = Tk() 
+root.geometry('200x150') 
+files = [ ('Arquivo ZIP', '*.html')] 
+file = asksaveasfile(filetypes = files, defaultextension = files) 
+btn = ttk.Button(root, text = 'Salvar', command = lambda : save()) 
+btn.pack(side = TOP, pady = 20)
+print(file)
+strfile=str(file)
+strfile=strfile[25:len(strfile)-29]
+print(strfile)
+urlretrieve(legenda[0],strfile)
+
+
