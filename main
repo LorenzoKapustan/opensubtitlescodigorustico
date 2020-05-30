@@ -40,7 +40,7 @@ for x in sc:
 print (legenda[0])
 root = Tk() 
 root.geometry('200x150') 
-files = [ ('Arquivo ZIP', '*.html')] 
+files = [ ('Arquivo ZIP', '*.zip')] 
 file = asksaveasfile(filetypes = files, defaultextension = files) 
 btn = ttk.Button(root, text = 'Salvar', command = lambda : save()) 
 btn.pack(side = TOP, pady = 20)
